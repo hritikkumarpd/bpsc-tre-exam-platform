@@ -1,7 +1,0 @@
-{
-  "/bpsc-tre/pyqs/page": "app/bpsc-tre/pyqs/page.js",
-  "/student/dashboard/page": "app/student/dashboard/page.js",
-  "/faq/page": "app/faq/page.js",
-  "/practice/[paperId]/page": "app/practice/[paperId]/page.js",
-  "/admin/users/page": "app/admin/users/page.js"
-}

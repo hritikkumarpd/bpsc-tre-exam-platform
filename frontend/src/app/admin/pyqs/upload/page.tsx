@@ -664,7 +664,7 @@ export default function PYQUploadPage() {
                     Standard Industry Excel / CSV Ingestion
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Upload your questions spreadsheet. If you don't have the template, download our standard industry format below.
+                    Upload your questions spreadsheet. If you don&apos;t have the template, download our standard industry format below.
                   </p>
                 </div>
 

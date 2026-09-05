@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased selection:bg-brand-500 selection:text-white;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom Utilities for Exam Prep */
+@layer utilities {
+  .gradient-hero {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #1E1B4B 100%);
+  }
+  .gradient-stet {
+    background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+  }
+  .gradient-bpsc {
+    background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+  }
+}

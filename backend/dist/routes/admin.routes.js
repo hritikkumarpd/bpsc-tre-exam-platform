@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const admin_controller_1 = require("../controllers/admin.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_1.authenticate);
+router.get('/metrics', (0, auth_middleware_1.requirePermission)('ANALYTICS_VIEW_ALL'), admin_controller_1.getAdminDashboardMetrics);
+router.get('/users', (0, auth_middleware_1.requirePermission)('USER_MANAGE'), admin_controller_1.getUsers);
+router.patch('/users/role', (0, auth_middleware_1.requirePermission)('USER_MANAGE'), admin_controller_1.updateUserRole);
+router.post('/mocks/generate', (0, auth_middleware_1.requirePermission)('MOCK_MANAGE'), admin_controller_1.triggerMockGeneration);
+router.patch('/mocks/:mockId/schedule', (0, auth_middleware_1.requirePermission)('MOCK_MANAGE'), admin_controller_1.scheduleMockRelease);
+router.post('/ai/generate', (0, auth_middleware_1.requirePermission)('QUESTION_CREATE'), admin_controller_1.triggerAIGeneration);
+router.get('/review-queue', (0, auth_middleware_1.requirePermission)('QUESTION_VERIFY'), admin_controller_1.getReviewQueue);
+router.post('/review-queue/action', (0, auth_middleware_1.requirePermission)('QUESTION_VERIFY'), admin_controller_1.approveReviewDraft);
+router.get('/violations', (0, auth_middleware_1.requirePermission)('VIOLATIONS_MONITOR'), admin_controller_1.getAntiCheatViolations);
+router.get('/audit-logs', (0, auth_middleware_1.requirePermission)('USER_MANAGE'), admin_controller_1.getAuditLogs);
+exports.default = router;

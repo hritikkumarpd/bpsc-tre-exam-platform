@@ -1,0 +1,100 @@
+import { UserRole } from '../types';
+
+export type Permission =
+  | 'TEST_ATTEMPT'
+  | 'TEST_VIEW_OWN_RESULTS'
+  | 'PROFILE_MANAGE'
+  | 'BOOKMARK_MANAGE'
+  | 'QUESTION_CREATE'
+  | 'QUESTION_EDIT'
+  | 'QUESTION_DELETE'
+  | 'QUESTION_VERIFY'
+  | 'QUESTION_VIEW_ALL'
+  | 'MOCK_MANAGE'
+  | 'PYQ_MANAGE'
+  | 'USER_MANAGE'
+  | 'SUPPORT_ACCESS'
+  | 'ANALYTICS_VIEW_ALL'
+  | 'VIOLATIONS_MONITOR'
+  | 'SYSTEM_ADMIN_FULL';
+
+export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
+  STUDENT: [
+    'TEST_ATTEMPT',
+    'TEST_VIEW_OWN_RESULTS',
+    'PROFILE_MANAGE',
+    'BOOKMARK_MANAGE',
+  ],
+
+  CONTENT_EDITOR: [
+    'TEST_ATTEMPT',
+    'TEST_VIEW_OWN_RESULTS',
+    'PROFILE_MANAGE',
+    'QUESTION_CREATE',
+    'QUESTION_EDIT',
+    'QUESTION_VIEW_ALL',
+    'PYQ_MANAGE',
+  ],
+
+  TEACHER_EXPERT: [
+    'TEST_ATTEMPT',
+    'TEST_VIEW_OWN_RESULTS',
+    'PROFILE_MANAGE',
+    'QUESTION_CREATE',
+    'QUESTION_EDIT',
+    'QUESTION_VERIFY',
+    'QUESTION_VIEW_ALL',
+    'MOCK_MANAGE',
+    'PYQ_MANAGE',
+  ],
+
+  SUPPORT: [
+    'TEST_ATTEMPT',
+    'TEST_VIEW_OWN_RESULTS',
+    'PROFILE_MANAGE',
+    'SUPPORT_ACCESS',
+    'VIOLATIONS_MONITOR',
+  ],
+
+  ADMIN: [
+    'TEST_ATTEMPT',
+    'TEST_VIEW_OWN_RESULTS',
+    'PROFILE_MANAGE',
+    'BOOKMARK_MANAGE',
+    'QUESTION_CREATE',
+    'QUESTION_EDIT',
+    'QUESTION_DELETE',
+    'QUESTION_VERIFY',
+    'QUESTION_VIEW_ALL',
+    'MOCK_MANAGE',
+    'PYQ_MANAGE',
+    'USER_MANAGE',
+    'SUPPORT_ACCESS',
+    'ANALYTICS_VIEW_ALL',
+    'VIOLATIONS_MONITOR',
+  ],
+
+  SUPER_ADMIN: [
+    'TEST_ATTEMPT',
+    'TEST_VIEW_OWN_RESULTS',
+    'PROFILE_MANAGE',
+    'BOOKMARK_MANAGE',
+    'QUESTION_CREATE',
+    'QUESTION_EDIT',
+    'QUESTION_DELETE',
+    'QUESTION_VERIFY',
+    'QUESTION_VIEW_ALL',
+    'MOCK_MANAGE',
+    'PYQ_MANAGE',
+    'USER_MANAGE',
+    'SUPPORT_ACCESS',
+    'ANALYTICS_VIEW_ALL',
+    'VIOLATIONS_MONITOR',
+    'SYSTEM_ADMIN_FULL',
+  ],
+};
+
+export function hasPermission(userRole: UserRole, permission: Permission): boolean {
+  const permissions = ROLE_PERMISSIONS[userRole] || [];
+  return permissions.includes(permission) || permissions.includes('SYSTEM_ADMIN_FULL');
+}

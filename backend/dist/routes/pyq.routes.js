@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const pyq_controller_1 = require("../controllers/pyq.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/', pyq_controller_1.getPYQPapers);
+router.get('/:id', pyq_controller_1.getPYQPaperById);
+router.post('/', auth_middleware_1.authenticate, (0, auth_middleware_1.requirePermission)('PYQ_MANAGE'), pyq_controller_1.createPYQPaper);
+router.post('/questions', auth_middleware_1.authenticate, (0, auth_middleware_1.requirePermission)('PYQ_MANAGE'), pyq_controller_1.addQuestionToPYQ);
+router.post('/parse-pdf', auth_middleware_1.authenticate, (0, auth_middleware_1.requirePermission)('PYQ_MANAGE'), pyq_controller_1.parsePDFQuestionPaper);
+router.post('/upload-pdf-file', auth_middleware_1.authenticate, (0, auth_middleware_1.requirePermission)('PYQ_MANAGE'), pyq_controller_1.uploadAndParsePDFFile);
+router.post('/import-paper', auth_middleware_1.authenticate, (0, auth_middleware_1.requirePermission)('PYQ_MANAGE'), pyq_controller_1.importPYQPaper);
+exports.default = router;

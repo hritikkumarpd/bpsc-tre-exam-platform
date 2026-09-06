@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMe = exports.logout = exports.login = exports.signup = void 0;
+exports.googleLogin = exports.getMe = exports.logout = exports.login = exports.signup = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const crypto_1 = __importDefault(require("crypto"));
 const zod_1 = require("zod");
 const user_model_1 = require("../models/user.model");
 const env_1 = require("../config/env");
@@ -158,6 +159,7 @@ const getMe = async (req, res) => {
                 email: user.email,
                 role: user.role,
                 targetExam: user.targetExam,
+                avatar: user.avatar,
                 permissions: permissions_1.ROLE_PERMISSIONS[user.role],
                 createdAt: user.createdAt,
             },
@@ -165,3 +167,94 @@ const getMe = async (req, res) => {
     });
 };
 exports.getMe = getMe;
+const googleLogin = async (req, res) => {
+    try {
+        const { credential, targetExam } = req.body;
+        if (!credential || typeof credential !== 'string') {
+            return res.status(400).json({
+                success: false,
+                message: 'Google credential token is required.',
+            });
+        }
+        // Verify token with Google's public tokeninfo endpoint
+        const googleRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);
+        if (!googleRes.ok) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid or expired Google authentication token.',
+            });
+        }
+        const payload = await googleRes.json();
+        if (!payload.email || payload.email_verified === 'false' && payload.email_verified === false) {
+            return res.status(400).json({
+                success: false,
+                message: 'Google account email is not verified.',
+            });
+        }
+        const email = payload.email.toLowerCase();
+        const name = payload.name || payload.given_name || 'Google User';
+        const avatar = payload.picture || '';
+        const googleId = payload.sub;
+        let user = await user_model_1.UserModel.findOne({
+            $or: [{ googleId }, { email }],
+        });
+        if (user) {
+            if (user.status === 'SUSPENDED') {
+                return res.status(403).json({ success: false, message: 'Your account has been suspended.' });
+            }
+            if (!user.googleId)
+                user.googleId = googleId;
+            if (avatar && !user.avatar)
+                user.avatar = avatar;
+            user.lastLoginAt = new Date();
+            await user.save();
+        }
+        else {
+            // Auto-register new student user
+            const randomPassword = crypto_1.default.randomBytes(32).toString('hex');
+            const passwordHash = await bcryptjs_1.default.hash(randomPassword, 10);
+            user = await user_model_1.UserModel.create({
+                name,
+                email,
+                passwordHash,
+                role: 'STUDENT',
+                targetExam: targetExam || 'BOTH',
+                avatar,
+                googleId,
+                lastLoginAt: new Date(),
+            });
+        }
+        const tokenPayload = {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            permissions: permissions_1.ROLE_PERMISSIONS[user.role],
+        };
+        const token = jsonwebtoken_1.default.sign(tokenPayload, env_1.env.JWT_SECRET, { expiresIn: '7d' });
+        res.cookie('auth_token', token, COOKIE_OPTIONS);
+        return res.status(200).json({
+            success: true,
+            message: 'Logged in with Google successfully.',
+            data: {
+                user: {
+                    id: user._id.toString(),
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    targetExam: user.targetExam,
+                    avatar: user.avatar,
+                    permissions: permissions_1.ROLE_PERMISSIONS[user.role],
+                },
+            },
+        });
+    }
+    catch (err) {
+        console.error('[GOOGLE LOGIN ERROR]:', err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to authenticate with Google.',
+        });
+    }
+};
+exports.googleLogin = googleLogin;

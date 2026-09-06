@@ -48,6 +48,7 @@ const UserSchema = new mongoose_1.Schema({
     status: { type: String, enum: ['ACTIVE', 'SUSPENDED'], default: 'ACTIVE' },
     targetExam: { type: String, enum: ['STET_CSE', 'BPSC_TRE_CSE', 'BOTH'], default: 'BOTH' },
     avatar: { type: String },
+    googleId: { type: String, index: true, sparse: true },
     lastLoginAt: { type: Date },
 }, { timestamps: true });
 exports.UserModel = mongoose_1.default.model('User', UserSchema);

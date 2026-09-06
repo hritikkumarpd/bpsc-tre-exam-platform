@@ -9,6 +9,7 @@ export interface IUser extends Document {
   status: 'ACTIVE' | 'SUSPENDED';
   targetExam?: ExamCategory | 'BOTH';
   avatar?: string;
+  googleId?: string;
   lastLoginAt?: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -28,6 +29,7 @@ const UserSchema: Schema = new Schema(
     status: { type: String, enum: ['ACTIVE', 'SUSPENDED'], default: 'ACTIVE' },
     targetExam: { type: String, enum: ['STET_CSE', 'BPSC_TRE_CSE', 'BOTH'], default: 'BOTH' },
     avatar: { type: String },
+    googleId: { type: String, index: true, sparse: true },
     lastLoginAt: { type: Date },
   },
   { timestamps: true }

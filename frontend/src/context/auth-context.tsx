@@ -9,6 +9,7 @@ export interface User {
   email: string;
   role: 'STUDENT' | 'CONTENT_EDITOR' | 'TEACHER_EXPERT' | 'SUPPORT' | 'ADMIN' | 'SUPER_ADMIN';
   targetExam: 'STET_CSE' | 'BPSC_TRE_CSE' | 'BOTH';
+  avatar?: string;
   createdAt?: string;
 }
 
@@ -16,6 +17,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; message?: string }>;
+  loginWithGoogle: (credential: string, targetExam?: string) => Promise<{ success: boolean; message?: string }>;
   signup: (name: string, email: string, password: string, targetExam: string) => Promise<{ success: boolean; message?: string }>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -65,6 +67,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const loginWithGoogle = async (credential: string, targetExam?: string) => {
+    try {
+      const response = await apiClient.post<ApiResponse<{ user: User }>>('/auth/google', {
+        credential,
+        targetExam: targetExam || 'BOTH',
+      });
+
+      if (response.data.success && response.data.data?.user) {
+        setUser(response.data.data.user);
+        return { success: true, message: response.data.message };
+      } else {
+        return { success: false, message: response.data.message || 'Google sign-in failed' };
+      }
+    } catch (err: any) {
+      const msg = err.response?.data?.message || 'Google sign-in failed. Please try again.';
+      return { success: false, message: msg };
+    }
+  };
+
   const signup = async (name: string, email: string, password: string, targetExam: string) => {
     try {
       const response = await apiClient.post<ApiResponse<{ user: User }>>('/auth/register', {
@@ -102,6 +123,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         loading,
         login,
+        loginWithGoogle,
         signup,
         logout,
         refreshUser: fetchCurrentUser,

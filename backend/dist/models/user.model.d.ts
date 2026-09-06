@@ -8,6 +8,7 @@ export interface IUser extends Document {
     status: 'ACTIVE' | 'SUSPENDED';
     targetExam?: ExamCategory | 'BOTH';
     avatar?: string;
+    googleId?: string;
     lastLoginAt?: Date;
     createdAt: Date;
     updatedAt: Date;

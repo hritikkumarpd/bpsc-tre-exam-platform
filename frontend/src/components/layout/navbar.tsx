@@ -99,6 +99,14 @@ export function Navbar() {
                 </Button>
               </Link>
               <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
+                {user.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    referrerPolicy="no-referrer"
+                    className="w-7 h-7 rounded-full object-cover border border-brand-200 shadow-2xs"
+                  />
+                ) : null}
                 <div className="text-xs">
                   <div className="font-semibold text-slate-900 leading-none">{user.name}</div>
                   <div className="text-[10px] text-slate-500 capitalize">{user.role.toLowerCase().replace('_', ' ')}</div>
@@ -108,7 +116,7 @@ export function Navbar() {
                   size="sm"
                   onClick={() => logout()}
                   title="Logout"
-                  className="text-slate-500 hover:text-rose-600 px-2"
+                  className="text-slate-500 hover:text-rose-600 px-2 cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                 </Button>

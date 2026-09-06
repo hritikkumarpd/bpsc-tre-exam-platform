@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import { z } from 'zod';
 import { UserModel } from '../models/user.model';
 import { env } from '../config/env';
@@ -169,9 +170,108 @@ export const getMe = async (req: Request, res: Response) => {
         email: user.email,
         role: user.role,
         targetExam: user.targetExam,
+        avatar: user.avatar,
         permissions: ROLE_PERMISSIONS[user.role],
         createdAt: user.createdAt,
       },
     },
   });
+};
+
+export const googleLogin = async (req: Request, res: Response) => {
+  try {
+    const { credential, targetExam } = req.body;
+
+    if (!credential || typeof credential !== 'string') {
+      return res.status(400).json({
+        success: false,
+        message: 'Google credential token is required.',
+      });
+    }
+
+    // Verify token with Google's public tokeninfo endpoint
+    const googleRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);
+    if (!googleRes.ok) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid or expired Google authentication token.',
+      });
+    }
+
+    const payload: any = await googleRes.json();
+    if (!payload.email || payload.email_verified === 'false' && payload.email_verified === false) {
+      return res.status(400).json({
+        success: false,
+        message: 'Google account email is not verified.',
+      });
+    }
+
+    const email = payload.email.toLowerCase();
+    const name = payload.name || payload.given_name || 'Google User';
+    const avatar = payload.picture || '';
+    const googleId = payload.sub;
+
+    let user = await UserModel.findOne({
+      $or: [{ googleId }, { email }],
+    });
+
+    if (user) {
+      if (user.status === 'SUSPENDED') {
+        return res.status(403).json({ success: false, message: 'Your account has been suspended.' });
+      }
+
+      if (!user.googleId) user.googleId = googleId;
+      if (avatar && !user.avatar) user.avatar = avatar;
+      user.lastLoginAt = new Date();
+      await user.save();
+    } else {
+      // Auto-register new student user
+      const randomPassword = crypto.randomBytes(32).toString('hex');
+      const passwordHash = await bcrypt.hash(randomPassword, 10);
+
+      user = await UserModel.create({
+        name,
+        email,
+        passwordHash,
+        role: 'STUDENT',
+        targetExam: targetExam || 'BOTH',
+        avatar,
+        googleId,
+        lastLoginAt: new Date(),
+      });
+    }
+
+    const tokenPayload = {
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      permissions: ROLE_PERMISSIONS[user.role],
+    };
+
+    const token = jwt.sign(tokenPayload, env.JWT_SECRET, { expiresIn: '7d' });
+    res.cookie('auth_token', token, COOKIE_OPTIONS);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Logged in with Google successfully.',
+      data: {
+        user: {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          targetExam: user.targetExam,
+          avatar: user.avatar,
+          permissions: ROLE_PERMISSIONS[user.role],
+        },
+      },
+    });
+  } catch (err) {
+    console.error('[GOOGLE LOGIN ERROR]:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to authenticate with Google.',
+    });
+  }
 };

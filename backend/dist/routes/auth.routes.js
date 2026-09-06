@@ -8,5 +8,6 @@ router.post('/signup', auth_controller_1.signup);
 router.post('/register', auth_controller_1.signup);
 router.post('/login', auth_controller_1.login);
 router.post('/logout', auth_controller_1.logout);
+router.post('/google', auth_controller_1.googleLogin);
 router.get('/me', auth_middleware_1.authenticate, auth_controller_1.getMe);
 exports.default = router;

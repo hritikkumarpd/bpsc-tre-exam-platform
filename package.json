@@ -1,0 +1,22 @@
+{
+  "name": "bpsc-stet-exam-platform",
+  "version": "1.0.0",
+  "description": "Production EdTech & Exam Preparation Platform for STET CSE & BPSC TRE CSE",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix frontend && npm install --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "build:frontend": "npm run build --prefix frontend",
+    "build:backend": "npm run build --prefix backend",
+    "build": "npm run build:backend && npm run build:frontend",
+    "lint:frontend": "npm run lint --prefix frontend",
+    "lint:backend": "npm run lint --prefix backend",
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "typecheck:frontend": "npm run typecheck --prefix frontend",
+    "typecheck:backend": "npm run typecheck --prefix backend",
+    "typecheck": "npm run typecheck:frontend && npm run typecheck:backend"
+  },
+  "author": "Antigravity Engineering",
+  "license": "ISC"
+}

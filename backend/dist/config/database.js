@@ -10,7 +10,11 @@ const connectDatabase = async () => {
     try {
         mongoose_1.default.set('strictQuery', true);
         const conn = await mongoose_1.default.connect(env_1.env.MONGODB_URI, {
-            autoIndex: true,
+            autoIndex: process.env.NODE_ENV !== 'production',
+            maxPoolSize: 50, // Allows high concurrent reads for 100K users
+            minPoolSize: 5,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
         });
         console.log(`🍃 MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`);
         return conn;

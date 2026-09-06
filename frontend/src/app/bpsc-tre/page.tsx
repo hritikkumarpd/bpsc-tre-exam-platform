@@ -44,17 +44,12 @@ export default function BpscTrePage() {
         title="BPSC TRE Computer Science Hub"
         description="Comprehensive preparation suite for Bihar Public Service Commission Teacher Recruitment Exam (TRE PGT Computer Science)."
         breadcrumbs={[{ label: 'BPSC TRE' }]}
-        badge={{ text: 'Recruitment Prep Hub', variant: 'bpsc' }}
+        badge={{ text: '15 Tests Series', variant: 'bpsc' }}
       >
         <div className="flex gap-3">
-          <Link href="/bpsc-tre/pyqs">
-            <Button variant="outline" className="bg-slate-800 text-white border-slate-700">
-              TRE 1.0, 2.0 & 3.0 PYQs
-            </Button>
-          </Link>
           <Link href="/bpsc-tre/mock-tests">
-            <Button variant="bpsc" rightIcon={<ArrowRight className="w-4 h-4" />}>
-              15 BPSC Mocks Series
+            <Button variant="bpsc" size="lg" rightIcon={<ArrowRight className="w-4 h-4" />}>
+              Open 15-Test Series (Mocks + PYQs)
             </Button>
           </Link>
         </div>
@@ -65,6 +60,14 @@ export default function BpscTrePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="border-t-4 border-t-emerald-600">
             <CardContent className="pt-6 text-center space-y-2">
+              <div className="text-3xl font-extrabold text-emerald-950">15 Total Tests</div>
+              <div className="text-sm font-semibold text-slate-700">Complete Series</div>
+              <p className="text-xs text-slate-500">11 Full Mocks + 4 Official Verified PYQs</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-t-4 border-t-emerald-600">
+            <CardContent className="pt-6 text-center space-y-2">
               <div className="text-3xl font-extrabold text-emerald-950">150 Questions</div>
               <div className="text-sm font-semibold text-slate-700">Pattern Weightage</div>
               <p className="text-xs text-slate-500">80 CS Core + 40 GS + 30 Qualifying Language</p>
@@ -73,88 +76,65 @@ export default function BpscTrePage() {
 
           <Card className="border-t-4 border-t-emerald-600">
             <CardContent className="pt-6 text-center space-y-2">
-              <div className="text-3xl font-extrabold text-emerald-950">150 Marks</div>
-              <div className="text-sm font-semibold text-slate-700">Maximum Marks</div>
-              <p className="text-xs text-slate-500">Configurable Negative Marking Simulation</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-t-4 border-t-emerald-600">
-            <CardContent className="pt-6 text-center space-y-2">
               <div className="text-3xl font-extrabold text-emerald-950">150 Minutes</div>
               <div className="text-sm font-semibold text-slate-700">Exam Duration</div>
-              <p className="text-xs text-slate-500">2.5 Hours Full Test Engine</p>
+              <p className="text-xs text-slate-500">2.5 Hours Real Simulator with Anti-Cheat</p>
             </CardContent>
           </Card>
         </div>
 
-        <Alert variant="success" title="Official BPSC TRE Genuine Papers Transcribed">
-          BPSC TRE 1.0, BPSC TRE 2.0, and BPSC TRE 3.0 question papers on our platform are verified against official BPSC keys. No duplicate or fabricated questions.
+        <Alert variant="success" title="Unified 15-Test Series Structure">
+          All 15 assessment papers (Mock Test #01 to #11 alongside official BPSC TRE 1.0, 2.0, 3.0 & 2022 PYQs) are organized into a single, cohesive test series without fragmented sections.
         </Alert>
 
-        {/* GENUINE TRE PYQ EDITIONS BREAKDOWN */}
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-xl font-bold text-slate-900">Official BPSC TRE Previous Year Papers</h2>
-            <p className="text-xs text-slate-500">Attempt past BPSC Computer Science recruitment papers online.</p>
+        {/* UNIFIED 15-TEST SERIES HIGHLIGHT */}
+        <div className="bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white rounded-2xl p-8 sm:p-10 border border-emerald-800/50 shadow-2xl space-y-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <Badge variant="bpsc" className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30">
+                Unified Test Series
+              </Badge>
+              <h2 className="text-3xl font-black text-white tracking-tight">
+                15 Full Tests: Mocks & Official PYQs Combined
+              </h2>
+              <p className="text-sm text-slate-300">
+                Don't waste time jumping between different tabs. Access all 11 curated full syllabus mocks and 4 authentic previous year papers directly in one test suite.
+              </p>
+            </div>
+
+            <Link href="/bpsc-tre/mock-tests">
+              <Button variant="bpsc" size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-8 py-6 text-base" rightIcon={<ArrowRight className="w-5 h-5" />}>
+                Go To 15-Test Series
+              </Button>
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {treEditions.map((edition, idx) => (
-              <Card key={idx} className="hover:border-emerald-300 hover:shadow-md transition-all">
-                <CardHeader>
-                  <div className="flex justify-between items-center">
-                    <Badge variant="pyq">Genuine PYQ</Badge>
-                    <span className="text-xs font-semibold text-slate-500">{edition.date}</span>
-                  </div>
-                  <CardTitle className="text-lg mt-2 text-slate-900">{edition.title}</CardTitle>
-                  <CardDescription>{edition.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="text-xs text-slate-600 space-y-2">
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span>Total Questions</span>
-                    <span className="font-semibold text-slate-900">{edition.questions} Qs</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span>Max Marks</span>
-                    <span className="font-semibold text-slate-900">{edition.marks} Marks</span>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Link href="/bpsc-tre/pyqs" className="w-full">
-                    <Button variant="outline" className="w-full" size="sm">
-                      Attempt Paper
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-800">
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-emerald-400 font-extrabold text-lg">Tests #01 – #11</div>
+              <div className="font-semibold text-white text-sm">Full-Length Mocks</div>
+              <p className="text-xs text-slate-400 mt-1">150 Qs simulated as per latest TRE 3.0 exam level.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-amber-400 font-extrabold text-lg">Test #12</div>
+              <div className="font-semibold text-white text-sm">BPSC TRE 1.0 (2023)</div>
+              <p className="text-xs text-slate-400 mt-1">Official August 2023 paper with verified keys.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-amber-400 font-extrabold text-lg">Test #13</div>
+              <div className="font-semibold text-white text-sm">BPSC TRE 2.0 (2023)</div>
+              <p className="text-xs text-slate-400 mt-1">Official December 2023 150-question paper.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-amber-400 font-extrabold text-lg">Tests #14 & #15</div>
+              <div className="font-semibold text-white text-sm">TRE 3.0 (2024) & 2022</div>
+              <p className="text-xs text-slate-400 mt-1">Latest competitive questions & foundational papers.</p>
+            </div>
           </div>
         </div>
 
         {/* ADSENSE PLACEHOLDER */}
         <AdSensePlaceholder slotId="bpsc-hub-middle" format="banner" />
-
-        {/* MOCK SERIES HIGHLIGHT */}
-        <div className="bg-slate-900 text-white rounded-2xl p-8 border border-slate-800 space-y-6">
-          <div className="max-w-2xl space-y-2">
-            <Badge variant="bpsc" className="bg-emerald-900/80 text-emerald-200 border-emerald-700">
-              15 Scheduled Mock Series
-            </Badge>
-            <h2 className="text-2xl font-extrabold text-white">Full-Length BPSC TRE CSE Mock Test Series</h2>
-            <p className="text-sm text-slate-300">
-              15 full 150-question mock tests created by subject experts following BPSC TRE 3.0 difficulty level. Scheduled releases with anti-cheat monitoring.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-            <Link href="/bpsc-tre/mock-tests">
-              <Button variant="bpsc" size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
-                View Mock Release Schedule
-              </Button>
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );

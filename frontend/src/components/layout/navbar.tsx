@@ -16,8 +16,8 @@ export function Navbar() {
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Student Dashboard', href: '/student/dashboard', badge: 'KG Style' },
-    { label: 'STET CSE', href: '/stet-cse', badge: '15 Mocks' },
-    { label: 'BPSC TRE', href: '/bpsc-tre', badge: 'TRE 1.0 - 3.0' },
+    { label: 'STET CSE', href: '/stet-cse/mock-tests', badge: '15 Tests' },
+    { label: 'BPSC TRE', href: '/bpsc-tre/mock-tests', badge: '15 Tests' },
     { label: 'Leaderboard', href: '/leaderboard' },
     { label: 'About', href: '/about' },
     { label: 'FAQ', href: '/faq' },

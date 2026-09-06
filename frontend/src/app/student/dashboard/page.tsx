@@ -75,24 +75,24 @@ export default function KnowledgeGateCloneDashboard() {
       title: 'BPSC TRE Computer Science (Class 11-12)',
       category: 'Official BPSC Curriculum',
       enrolledDate: 'August 2026',
-      totalModules: 12,
-      completedModules: 9,
+      totalModules: 15,
+      completedModules: 11,
       testScorePercent: 88,
-      badge: 'Active Track',
+      badge: '15 Tests Track',
       color: 'from-blue-600 to-indigo-700',
-      link: '/bpsc-tre/pyqs',
+      link: '/bpsc-tre/mock-tests',
     },
     {
       id: 'stet-cse-paper2',
       title: 'Bihar STET Paper-II Computer Science',
       category: 'BSEB High-School PGT',
       enrolledDate: 'July 2026',
-      totalModules: 10,
-      completedModules: 8,
+      totalModules: 15,
+      completedModules: 12,
       testScorePercent: 92,
-      badge: 'Top 5% Rank',
+      badge: '15 Tests Track',
       color: 'from-emerald-600 to-teal-700',
-      link: '/stet-cse/pyqs',
+      link: '/stet-cse/mock-tests',
     },
     {
       id: 'cs-core-dsa-dbms',
@@ -104,7 +104,7 @@ export default function KnowledgeGateCloneDashboard() {
       testScorePercent: 95,
       badge: 'Mastery Achieved',
       color: 'from-purple-600 to-violet-800',
-      link: '/admin/pyqs/upload',
+      link: '/bpsc-tre/mock-tests',
     },
   ];
 
@@ -253,8 +253,8 @@ export default function KnowledgeGateCloneDashboard() {
                       <GraduationCap className="w-4 h-4 text-blue-400" />
                       Course Scores & Subject Diagnostics
                     </p>
-                    <Link href="/bpsc-tre/pyqs" className="text-xs font-bold text-blue-400 hover:underline">
-                      View All Papers →
+                    <Link href="/bpsc-tre/mock-tests" className="text-xs font-bold text-blue-400 hover:underline">
+                      View All 15 Tests →
                     </Link>
                   </div>
 
@@ -306,22 +306,22 @@ export default function KnowledgeGateCloneDashboard() {
                   </div>
                 </div>
 
-                {/* SECTION 2: OFFICIAL PYQ INTERACTIVE SIMULATOR (Screen Reference) */}
+                {/* SECTION 2: 15-TEST SERIES INTERACTIVE SIMULATOR */}
                 <div className="bg-gradient-to-br from-[#0c1830] to-[#0a1324] border border-blue-900/40 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
                     <div>
                       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-400/30 mb-2">
-                        <Zap className="w-3.5 h-3.5" /> Interactive PYQ Engine
+                        <Zap className="w-3.5 h-3.5" /> 15-Test Series Engine
                       </span>
-                      <h2 className="text-xl font-black text-white">Full-Length Official PYQ Papers</h2>
+                      <h2 className="text-xl font-black text-white">Full-Length 15 Tests (Mocks + Official PYQs)</h2>
                       <p className="text-xs text-slate-400 mt-1">
-                        Test yourself with authentic BPSC TRE questions in a dark-mode interactive testing interface.
+                        Attempt curated full syllabus mock tests alongside authentic official previous year papers in an interactive testing interface.
                       </p>
                     </div>
 
-                    <Link href="/bpsc-tre/pyqs">
+                    <Link href="/bpsc-tre/mock-tests">
                       <button className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-extrabold shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2 shrink-0">
-                        Explore All PYQs
+                        View All 15 Tests
                         <ChevronRight className="w-4 h-4" />
                       </button>
                     </Link>
@@ -346,7 +346,7 @@ export default function KnowledgeGateCloneDashboard() {
 
                           <div className="flex items-center gap-3">
                             <button className="px-4 py-2 bg-blue-600 group-hover:bg-blue-500 text-white rounded-xl text-xs font-black shadow transition-all flex items-center gap-1.5">
-                              Start Test
+                              Attempt Test
                               <ChevronRight className="w-3.5 h-3.5" />
                             </button>
                           </div>

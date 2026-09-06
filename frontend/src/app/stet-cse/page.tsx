@@ -30,17 +30,12 @@ export default function StetCsePage() {
         title="Bihar STET Computer Science Hub"
         description="State Teacher Eligibility Test (STET) CS Paper II (Higher Secondary Class 11-12) complete exam suite."
         breadcrumbs={[{ label: 'STET CSE' }]}
-        badge={{ text: 'Official Exam Suite', variant: 'stet' }}
+        badge={{ text: '15 Tests Series', variant: 'stet' }}
       >
         <div className="flex gap-3">
-          <Link href="/stet-cse/pyqs">
-            <Button variant="outline" className="bg-slate-800 text-white border-slate-700">
-              3 Genuine PYQs
-            </Button>
-          </Link>
           <Link href="/stet-cse/mock-tests">
-            <Button variant="stet" rightIcon={<ArrowRight className="w-4 h-4" />}>
-              Start 15 Mocks Series
+            <Button variant="stet" size="lg" rightIcon={<ArrowRight className="w-4 h-4" />}>
+              Open 15-Test Series (Mocks + PYQs)
             </Button>
           </Link>
         </div>
@@ -51,6 +46,14 @@ export default function StetCsePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="border-t-4 border-t-indigo-600">
             <CardContent className="pt-6 text-center space-y-2">
+              <div className="text-3xl font-extrabold text-indigo-950">15 Total Tests</div>
+              <div className="text-sm font-semibold text-slate-700">Complete Test Series</div>
+              <p className="text-xs text-slate-500">11 Full Mocks + 4 Official BSEB PYQs</p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-t-4 border-t-indigo-600">
+            <CardContent className="pt-6 text-center space-y-2">
               <div className="text-3xl font-extrabold text-indigo-950">150 Questions</div>
               <div className="text-sm font-semibold text-slate-700">Total Paper Length</div>
               <p className="text-xs text-slate-500">100 Subject CS + 50 Pedagogy & Aptitude</p>
@@ -59,86 +62,62 @@ export default function StetCsePage() {
 
           <Card className="border-t-4 border-t-indigo-600">
             <CardContent className="pt-6 text-center space-y-2">
-              <div className="text-3xl font-extrabold text-indigo-950">150 Marks</div>
-              <div className="text-sm font-semibold text-slate-700">Total Weightage</div>
-              <p className="text-xs text-slate-500">1 Mark per question, No Negative Marking</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-t-4 border-t-indigo-600">
-            <CardContent className="pt-6 text-center space-y-2">
               <div className="text-3xl font-extrabold text-indigo-950">150 Minutes</div>
               <div className="text-sm font-semibold text-slate-700">Duration (2.5 Hours)</div>
-              <p className="text-xs text-slate-500">CBT Mode timed environment</p>
+              <p className="text-xs text-slate-500">Zero Negative Marking CBT Simulation</p>
             </CardContent>
           </Card>
         </div>
 
         {/* NOTICE ALERT */}
-        <Alert variant="info" title="Genuine STET Previous Year Question Guarantee">
-          All 3 STET CSE PYQ papers provided in our platform are indexed from actual Bihar School Examination Board (BSEB) computer science examination papers. We never use AI-generated placeholders labeled as PYQs.
+        <Alert variant="info" title="Unified STET CSE 15-Test Series">
+          Both mock test practice papers and authentic BSEB STET previous year question papers (2020, 2023 Shift 1, 2023 Shift 2, and 2024) are brought together under one unified sequence of 15 tests.
         </Alert>
 
-        {/* QUICK NAVIGATION CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="hover:shadow-md transition-shadow border-l-4 border-l-amber-500">
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <Badge variant="pyq">Genuine PYQ Collection</Badge>
-                <span className="text-xs text-slate-500">3 Verified Papers</span>
-              </div>
-              <CardTitle className="text-xl mt-2 text-slate-900">STET CSE Previous Year Papers</CardTitle>
-              <CardDescription>
-                Practice with real exam questions and official BSEB answer key explanations.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm text-slate-600">
-              <div className="flex justify-between py-1.5 border-b border-slate-100">
-                <span>STET CSE Official PYQ Paper I</span>
-                <span className="font-medium text-slate-900">150 Questions</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-slate-100">
-                <span>STET CSE Official PYQ Paper II</span>
-                <span className="font-medium text-slate-900">150 Questions</span>
-              </div>
-              <div className="flex justify-between py-1.5">
-                <span>STET CSE Official PYQ Paper III</span>
-                <span className="font-medium text-slate-900">150 Questions</span>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Link href="/stet-cse/pyqs" className="w-full">
-                <Button variant="outline" className="w-full">
-                  Access All STET PYQs
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-
-          <Card className="hover:shadow-md transition-shadow border-l-4 border-l-indigo-600">
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <Badge variant="stet">Scheduled Series</Badge>
-                <span className="text-xs text-slate-500">15 Full Length Mocks</span>
-              </div>
-              <CardTitle className="text-xl mt-2 text-slate-900">15 STET Scheduled Mock Tests</CardTitle>
-              <CardDescription>
-                Full 150-question mock tests released systematically on a scheduled timeline.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm text-slate-600">
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Each mock test strictly adheres to the official 150-mark pattern, featuring live timer countdown, answer persistence, and focus loss monitoring.
+        {/* UNIFIED 15-TEST SERIES HIGHLIGHT */}
+        <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-8 sm:p-10 border border-indigo-800/50 shadow-2xl space-y-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <Badge variant="stet" className="bg-indigo-500/20 text-indigo-300 border-indigo-500/30">
+                Unified Test Series
+              </Badge>
+              <h2 className="text-3xl font-black text-white tracking-tight">
+                15 Full Tests: Mocks & Official PYQs Combined
+              </h2>
+              <p className="text-sm text-slate-300">
+                Prepare without switching between separate pages. Experience all 11 curated full syllabus mocks and 4 authentic BSEB previous year question papers in a single assessment program.
               </p>
-            </CardContent>
-            <CardFooter>
-              <Link href="/stet-cse/mock-tests" className="w-full">
-                <Button variant="stet" className="w-full" rightIcon={<ArrowRight className="w-4 h-4" />}>
-                  Explore STET Mock Schedule
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
+            </div>
+
+            <Link href="/stet-cse/mock-tests">
+              <Button variant="stet" size="lg" className="bg-indigo-500 hover:bg-indigo-400 text-slate-950 font-bold px-8 py-6 text-base" rightIcon={<ArrowRight className="w-5 h-5" />}>
+                Go To 15-Test Series
+              </Button>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-800">
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-indigo-400 font-extrabold text-lg">Tests #01 – #11</div>
+              <div className="font-semibold text-white text-sm">Full-Length Mocks</div>
+              <p className="text-xs text-slate-400 mt-1">100 CS questions + 50 Art of Teaching & Reasoning.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-amber-400 font-extrabold text-lg">Test #12</div>
+              <div className="font-semibold text-white text-sm">STET CSE (2020)</div>
+              <p className="text-xs text-slate-400 mt-1">Original BSEB paper with verified explanations.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-amber-400 font-extrabold text-lg">Tests #13 & #14</div>
+              <div className="font-semibold text-white text-sm">STET 2023 (S1 & S2)</div>
+              <p className="text-xs text-slate-400 mt-1">Official September 2023 shift papers.</p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="text-amber-400 font-extrabold text-lg">Test #15</div>
+              <div className="font-semibold text-white text-sm">STET CSE (2024)</div>
+              <p className="text-xs text-slate-400 mt-1">Latest 2024 official recruitment examination.</p>
+            </div>
+          </div>
         </div>
 
         {/* ADSENSE PLACEHOLDER */}

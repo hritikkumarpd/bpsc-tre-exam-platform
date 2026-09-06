@@ -180,19 +180,18 @@ export default function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <span><strong>15 Tests Complete Series</strong> (11 Full Mocks + 4 Official PYQs)</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
                     <span>Topic breakdown: OS, DBMS, DS, Networking, OOPs, Web Tech</span>
                   </li>
                 </ul>
               </CardContent>
               <CardFooter className="flex flex-wrap gap-3">
-                <Link href="/stet-cse/pyqs">
-                  <Button variant="outline" size="sm">
-                    Attempt STET PYQs
-                  </Button>
-                </Link>
-                <Link href="/stet-cse/mock-tests">
-                  <Button variant="stet" size="sm" rightIcon={<ArrowRight className="w-4 h-4" />}>
-                    STET Mock Series
+                <Link href="/stet-cse/mock-tests" className="w-full">
+                  <Button variant="stet" size="sm" className="w-full font-bold" rightIcon={<ArrowRight className="w-4 h-4" />}>
+                    Open STET 15-Test Series
                   </Button>
                 </Link>
               </CardFooter>
@@ -209,18 +208,18 @@ export default function HomePage() {
                   BPSC TRE Computer Science Hub
                 </CardTitle>
                 <CardDescription>
-                  Complete prep for Bihar Teacher Recruitment Exam 1.0, 2.0, 3.0 & upcoming TRE 4.0.
+                  Complete prep for Bihar Teacher Recruitment Exam (TRE 1.0, 2.0, 3.0 & TRE 4.0).
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 text-sm text-slate-600">
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span><strong>BPSC TRE 1.0, 2.0 & 3.0 PYQ Papers</strong> with authentic keys</span>
+                    <span><strong>15 Tests Complete Series</strong> (11 Full Mocks + 4 Official PYQs)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span><strong>15 Full Length Mocks</strong> (150 Marks, 150 Qs)</span>
+                    <span>Official TRE 1.0, 2.0 & 3.0 papers integrated into test series</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -229,14 +228,9 @@ export default function HomePage() {
                 </ul>
               </CardContent>
               <CardFooter className="flex flex-wrap gap-3">
-                <Link href="/bpsc-tre/pyqs">
-                  <Button variant="outline" size="sm">
-                    View TRE PYQs
-                  </Button>
-                </Link>
-                <Link href="/bpsc-tre/mock-tests">
-                  <Button variant="bpsc" size="sm" rightIcon={<ArrowRight className="w-4 h-4" />}>
-                    BPSC Mock Series
+                <Link href="/bpsc-tre/mock-tests" className="w-full">
+                  <Button variant="bpsc" size="sm" className="w-full font-bold" rightIcon={<ArrowRight className="w-4 h-4" />}>
+                    Open BPSC 15-Test Series
                   </Button>
                 </Link>
               </CardFooter>

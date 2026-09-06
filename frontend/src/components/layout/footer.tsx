@@ -38,13 +38,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/stet-cse/pyqs" className="hover:text-white transition-colors">
-                  STET CSE PYQs (3 Papers)
-                </Link>
-              </li>
-              <li>
-                <Link href="/stet-cse/mock-tests" className="hover:text-white transition-colors">
-                  STET 15 Mock Test Series
+                <Link href="/stet-cse/mock-tests" className="hover:text-white transition-colors font-medium text-indigo-300">
+                  STET 15-Test Series (Mocks + PYQs)
                 </Link>
               </li>
               <li>
@@ -67,13 +62,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/bpsc-tre/pyqs" className="hover:text-white transition-colors">
-                  BPSC TRE 1.0, 2.0 & 3.0 PYQs
-                </Link>
-              </li>
-              <li>
-                <Link href="/bpsc-tre/mock-tests" className="hover:text-white transition-colors">
-                  BPSC TRE 15 Mock Test Series
+                <Link href="/bpsc-tre/mock-tests" className="hover:text-white transition-colors font-medium text-emerald-300">
+                  BPSC TRE 15-Test Series (Mocks + PYQs)
                 </Link>
               </li>
               <li>

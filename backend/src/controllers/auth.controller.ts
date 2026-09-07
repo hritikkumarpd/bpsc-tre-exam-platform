@@ -103,13 +103,13 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });
     }
 
+    if (user.status === 'SUSPENDED') {
+      return res.status(403).json({ success: false, message: 'Your account has been suspended.' });
+    }
+
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });
-    }
-
-    if (user.status === 'SUSPENDED') {
-      return res.status(403).json({ success: false, message: 'Your account has been suspended.' });
     }
 
     user.lastLoginAt = new Date();
@@ -199,7 +199,7 @@ export const googleLogin = async (req: Request, res: Response) => {
     }
 
     const payload: any = await googleRes.json();
-    if (!payload.email || payload.email_verified === 'false' && payload.email_verified === false) {
+    if (!payload.email || payload.email_verified === 'false' || payload.email_verified === false) {
       return res.status(400).json({
         success: false,
         message: 'Google account email is not verified.',

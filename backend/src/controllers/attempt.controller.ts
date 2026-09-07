@@ -209,22 +209,22 @@ export const submitAttempt = async (req: Request, res: Response) => {
     let wrongCount = 0;
     let skippedCount = 0;
 
-    userAnswers.forEach((ans) => {
+    for (const ans of userAnswers) {
       if (!ans.selectedOption) {
         skippedCount++;
-        return;
+        continue;
       }
       const q = questionMap.get(ans.questionId.toString());
       if (q) {
         const isCorrect = ans.selectedOption === q.correctAnswer;
         ans.isCorrect = isCorrect;
         ans.markAwarded = isCorrect ? 1 : negativeMarking > 0 ? -negativeMarking : 0;
-        ans.save();
+        await ans.save();
 
         if (isCorrect) correctCount++;
         else wrongCount++;
       }
-    });
+    }
 
     const totalQuestions = attempt.totalMarks || 150;
     skippedCount = totalQuestions - (correctCount + wrongCount);

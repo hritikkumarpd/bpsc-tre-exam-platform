@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { apiClient } from '@/lib/api-client';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 import { Badge } from '@/components/ui/badge';
@@ -58,33 +59,66 @@ export default function InteractiveExamEngine() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paletteMobileOpen, setPaletteMobileOpen] = useState(false);
 
-  // Demo Fallback Questions Generator if offline/demo
+  // Fetch real attempt state from backend
   useEffect(() => {
-    // Generate 150 structured questions for demo/development execution
-    const mockQuestionsList: Question[] = Array.from({ length: 150 }).map((_, i) => ({
-      _id: `q_${i + 1}`,
-      questionText: `[Question #${i + 1}] Which of the following statements is TRUE regarding Computer Science concept #${(i % 15) + 1}?`,
-      options: [
-        { key: 'A', text: `Option A statement for question #${i + 1}` },
-        { key: 'B', text: `Option B statement for question #${i + 1}` },
-        { key: 'C', text: `Option C statement for question #${i + 1}` },
-        { key: 'D', text: `Option D statement for question #${i + 1}` },
-        { key: 'E', text: `None of the above` },
-      ],
-      subject: i < 80 ? 'Computer Science Core' : i < 120 ? 'General Studies' : 'Qualifying Language',
-      topic: `Unit ${(i % 10) + 1}`,
-      difficulty: i % 3 === 0 ? 'EASY' : i % 3 === 1 ? 'MEDIUM' : 'HARD',
-    }));
+    if (!attemptId) return;
 
-    setQuestions(mockQuestionsList);
+    apiClient
+      .get<{ success: boolean; data?: { questions: Array<{ questionNumber: number; question: Question }>; savedAnswers: SavedAnswer[]; attempt: { durationSeconds: number } } }>(
+        `/attempts/${attemptId}`
+      )
+      .then((res) => {
+        const d = res.data?.data;
+        if (d?.questions?.length) {
+          const sorted = [...d.questions].sort((a, b) => a.questionNumber - b.questionNumber);
+          setQuestions(sorted.map((q) => q.question));
+        }
+        if (d?.savedAnswers?.length) {
+          const map = new Map<number, SavedAnswer>();
+          d.savedAnswers.forEach((a) => map.set(a.questionNumber, a));
+          setUserAnswers(map);
+        }
+        if (d?.attempt?.durationSeconds) {
+          setTimeLeftSeconds(d.attempt.durationSeconds);
+        }
+      })
+      .catch(() => {
+        // Fallback to demo questions if API unavailable
+        const mockQuestionsList: Question[] = Array.from({ length: 150 }).map((_, i) => ({
+          _id: `q_${i + 1}`,
+          questionText: `[DEMO Q${i + 1}] Which of the following is TRUE about CS concept #${(i % 15) + 1}?`,
+          options: [
+            { key: 'A', text: `Option A for Q${i + 1}` },
+            { key: 'B', text: `Option B for Q${i + 1}` },
+            { key: 'C', text: `Option C for Q${i + 1}` },
+            { key: 'D', text: `Option D for Q${i + 1}` },
+            { key: 'E', text: `None of the above` },
+          ],
+          subject: i < 80 ? 'Computer Science Core' : i < 120 ? 'General Studies' : 'Qualifying Language',
+          topic: `Unit ${(i % 10) + 1}`,
+          difficulty: i % 3 === 0 ? 'EASY' : i % 3 === 1 ? 'MEDIUM' : 'HARD',
+        }));
+        setQuestions(mockQuestionsList);
+      });
   }, [attemptId]);
 
   // Focus Violation Detector (Page Visibility & Window Blur)
+  // Use a ref-based debounce lock to prevent double-firing when both
+  // `visibilitychange` and `window.blur` fire on the same tab switch.
+  const focusLossLockRef = useRef(false);
   const handleFocusLoss = useCallback(() => {
+    if (focusLossLockRef.current) return;
+    focusLossLockRef.current = true;
+    setTimeout(() => { focusLossLockRef.current = false; }, 500);
+
+    // Report to backend
+    if (attemptId) {
+      apiClient.post(`/violations/${attemptId}`, { event: 'FOCUS_LOSS_BLUR' }).catch(() => {});
+    }
+
     setFocusViolations((prev) => {
       const nextCount = prev + 1;
       if (nextCount >= 6) {
-        // 6th Violation -> Automatic Cancellation
         router.push(`/exam/${attemptId}/cancelled`);
       } else {
         setShowWarningModal(true);
@@ -114,9 +148,13 @@ export default function InteractiveExamEngine() {
 
   const handleSubmitTest = useCallback(async () => {
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      await apiClient.post(`/attempts/${attemptId}/submit`);
+    } catch {
+      // Even if the API fails, navigate to result — backend is authoritative
+    } finally {
       router.push(`/exam/${attemptId}/result`);
-    }, 1000);
+    }
   }, [attemptId, router]);
 
   // Countdown Timer
